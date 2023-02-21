@@ -34,13 +34,13 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/inst
 RUN if [ ! -z "$WITH_WHISPER" ] \
     ; then \
     pip install --target="/install" \
-    -r requirements.txt \
-    -r requirements_whisper.txt \
-    && pip install --target"/install" \
-    git+https://github.com/openai/whisper.git --no-deps \
+       -r requirements.txt \
+       -r requirements_whisper.txt \
+    ; pip install --target="install" \
+       git+https://github.com/openai/whisper.git --no-deps \
     ; else \
     pip install --target="/install" \
-    -r requirements.txt \
+       -r requirements.txt \
     ; fi
 
 COPY requirements.txt /install
