@@ -7,8 +7,7 @@ FROM python:${PY_VERSION} as base
 FROM base as builder
 ARG PY_VERSION
 ARG TARGETPLATFORM
-ARG WITH_WHISPER
-RUN echo "${WITH_WHISPER}"
+ARG FULL
 
 COPY . .
 
@@ -27,19 +26,18 @@ WORKDIR /install
 
 RUN pip install --target="/install" --upgrade pip setuptools wheel
 RUN pip install --target="/install" --upgrade setuptools_rust
-# if empty run as usual, if amd64 do the same, if arm64 load an arm version of torch
-RUN if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi
-RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi
-RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/install" --upgrade torch==1.9.0 torchvision==0.10.0 -f https://torch.kmtea.eu/whl/stable.html -f https://ext.kmtea.eu/whl/stable.html ; fi
 
 COPY requirements.txt /install
 COPY requirements_whisper.txt /install
 RUN pip install --target="install" -r requirements.txt
-RUN if [ "{$WITH_WHISPER}" = "true" ]; then \
+RUN if [ "${FULL}" = "true" ]; then \
     pip install --target="/install" \
        -r requirements_whisper.txt \
     ; pip install --target="install" \
        --no-deps --no-build-isolation git+https://github.com/openai/whisper.git \
+    ; if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
+    ; if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
+    ; if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/install" --upgrade torch==1.9.0 torchvision==0.10.0 -f https://torch.kmtea.eu/whl/stable.html -f https://ext.kmtea.eu/whl/stable.html ; fi \  
     ; fi
 
 COPY README.md /src

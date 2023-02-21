@@ -104,10 +104,10 @@ jobs:
         id: build-and-push-whisper
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
-          build-args: WITH_WHISPER=true
+          build-args: FULL=true
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}-whisper
+          tags: ${{ steps.meta.outputs.tags }}-full
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
