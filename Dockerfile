@@ -34,7 +34,7 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/inst
 
 COPY requirements.txt /install
 COPY requirements_whisper.txt /install
-RUN pip install --target="install" -r requirements
+RUN pip install --target="install" -r requirements.txt
 RUN if [ "{$WITH_WHISPER}" = "true" ]; then \
     pip install --target="/install" \
        -r requirements_whisper.txt \
