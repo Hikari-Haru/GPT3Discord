@@ -31,8 +31,7 @@ RUN if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrad
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi
 RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/install" --upgrade torch==1.9.0 torchvision==0.10.0 -f https://torch.kmtea.eu/whl/stable.html -f https://ext.kmtea.eu/whl/stable.html ; fi
 
-RUN if [ ! -z "$WITH_WHISPER" ] \
-    ; then \
+RUN if [ -n "{$WITH_WHISPER}" ]; then \
     pip install --target="/install" \
        -r requirements.txt \
        -r requirements_whisper.txt \
