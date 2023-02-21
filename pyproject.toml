@@ -34,11 +34,14 @@ dependencies = [
   "gpt-index",
   "PyPDF2",
   "youtube_transcript_api",
-  "sentence-transformers",
   "sentencepiece",
   "protobuf",
   "python-pptx",
 ]
+
+[project.optional-dependencies]
+AV = ["sentence-transformers", "numpy", "tqdm", "more-itertools", "ffmpeg-python", "openai-whisper"]
+
 
 dynamic = ["version"]
 [project.scripts]

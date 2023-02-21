@@ -37,7 +37,7 @@ RUN if [ "${FULL}" = "true" ]; then \
     ; pip install --target="/install" \
        -r requirements_whisper.txt \
     ; pip install --target="install" \
-       --no-deps --no-build-isolation git+https://github.com/openai/whisper.git \
+       --no-deps --no-build-isolation openai-whisper \
     ; fi
 
 COPY README.md /src
