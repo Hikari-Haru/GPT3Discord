@@ -39,17 +39,19 @@ dependencies = [
   "python-pptx",
 ]
 
-[project.optional-dependencies]
-AV = ["sentence-transformers", "numpy", "tqdm", "more-itertools", "ffmpeg-python", "openai-whisper"]
-
-
 dynamic = ["version"]
+
+
 [project.scripts]
 gpt3discord = "gpt3discord:init"
+
 [project.urls]
 Documentation = "https://github.com/Kav-K/GPT3Discord/#readme"
 Issues = "https://github.com/Kav-K/GPT3Discord/issues"
 Source = "https://github.com/Kav-K/GPT3Discord"
+
+[project.optional-dependencies]
+AV = ["sentence-transformers", "numpy", "tqdm", "more-itertools", "ffmpeg-python", "openai-whisper"]
 
 [tool.hatch.version]
 path = "gpt3discord.py"
