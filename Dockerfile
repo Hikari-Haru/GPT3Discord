@@ -7,6 +7,7 @@ FROM python:${PY_VERSION} as base
 FROM base as builder
 ARG PY_VERSION
 ARG TARGETPLATFORM
+ARG WITH_WHISPER
 
 COPY . .
 
@@ -29,7 +30,18 @@ RUN pip install --target="/install" --upgrade setuptools_rust
 RUN if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi
 RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/install" --upgrade torch==1.9.0 torchvision==0.10.0 -f https://torch.kmtea.eu/whl/stable.html -f https://ext.kmtea.eu/whl/stable.html ; fi
-RUN pip install openai-whisper
+
+RUN if [ ! -z "$WITH_WHISPER" ] \
+    ; then \
+    pip install --target="/install" \
+    -r requirements.txt \
+    -r requirements_whisper.txt \
+    && pip install --target"/install" \
+    git+https://github.com/openai/whisper.git --no-deps \
+    ; else \
+    pip install --target="/install" \
+    -r requirements.txt \
+    ; fi
 
 COPY requirements.txt /install
 RUN pip install --target="/install" -r requirements.txt
