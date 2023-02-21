@@ -44,20 +44,6 @@ RUN pip install --target="/install" /src
 # Copy minimal to main image (to keep as small as possible)
 FROM python:${PY_VERSION}-slim
 
-ENV OPENAI_TOKEN=""
-ENV DISCORD_TOKEN=""
-ENV PINECONE_TOKEN=""
-ENV DEBUG_GUILD=""
-ENV DEBUG_CHANNEL=""
-ENV ALLOWED_GUILDS=""
-ENV ADMIN_ROLES=""
-ENV DALLE_ROLES=""
-ENV GPT_ROLES=""
-ENV WELCOME_MESSAGE=""
-ENV USER_INPUT_API_KEYS=""
-ENV MODERATIONS_ALERT_CHANNEL=""
-ENV USER_KEY_DB_PATH=""
-
 ARG PY_VERSION
 COPY . .
 COPY --from=builder /install /usr/local/lib/python${PY_VERSION}/site-packages
