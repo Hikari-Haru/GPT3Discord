@@ -19,6 +19,7 @@ RUN apt-get install -y \
     curl
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y && apt-get install --reinstall libc6-dev -y
 ENV PATH="/root/.cargo/bin:${PATH}"
+ENV PYO3_PYTHON=/usr/bin/python3
 
 
 RUN mkdir /install /src
