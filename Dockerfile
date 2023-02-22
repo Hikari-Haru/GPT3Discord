@@ -56,6 +56,7 @@ FROM python:${PY_VERSION}-slim
 ARG PY_VERSION
 COPY . .
 COPY --from=builder /install /usr/local/lib/python${PY_VERSION}/site-packages
+RUN apt-get update -y
 RUN apt-get install -y ffmpeg
 RUN mkdir -p /opt/gpt3discord/etc
 COPY gpt3discord.py /opt/gpt3discord/bin/
