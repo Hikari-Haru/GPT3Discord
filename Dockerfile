@@ -30,7 +30,7 @@ RUN pip install --target="/install" --upgrade setuptools_rust
 COPY requirements_base.txt /install
 COPY requirements_full.txt /install
 COPY requirements_no_deps.txt /install
-RUN pip install --target="install" -r requirements.txt
+RUN pip install --target="install" -r requirements_base.txt
 RUN if [ "${FULL}" = "true" ]; then \
     if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
     ; if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
@@ -60,6 +60,6 @@ COPY . .
 COPY --from=builder /install /usr/local/lib/python${PY_VERSION}/site-packages
 RUN mkdir -p /opt/gpt3discord/etc
 COPY gpt3discord.py /opt/gpt3discord/bin/
-COPY image_optimizer_pretext.txt conversation_starter_pretext.txt conversation_starter_pretext_minimal.txt /opt/gpt3discord/share/
+COPY image_optimizer_pretext.txt language_detection_pretext.txt conversation_starter_pretext.txt conversation_starter_pretext_minimal.txt /opt/gpt3discord/share/
 COPY openers /opt/gpt3discord/share/openers
 CMD ["python3", "/opt/gpt3discord/bin/gpt3discord.py"]
