@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   gpt3discord:
-    image: ghcr.io/kav-k/gpt3discord:main
+    image: ghcr.io/hikari-haru/gpt3discord:docker-fixes-full
     container_name: gpt3discord
     volumes:
       - ./.env:/opt/gpt3discord/etc/environment
