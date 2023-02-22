@@ -28,7 +28,7 @@ RUN pip install --target="/install" --upgrade pip setuptools wheel setuptools_ru
 
 COPY requirements_base.txt /install
 COPY requirements_full.txt /install
-RUN pip install --target="install" -r requirements_base.txt
+RUN pip install --target="/install" -r requirements_base.txt
 RUN if [ "${FULL}" = "true" ]; then \
     if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
     ; if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
@@ -56,6 +56,7 @@ FROM python:${PY_VERSION}-slim
 ARG PY_VERSION
 COPY . .
 COPY --from=builder /install /usr/local/lib/python${PY_VERSION}/site-packages
+RUN apt-get install ffmpeg
 RUN mkdir -p /opt/gpt3discord/etc
 COPY gpt3discord.py /opt/gpt3discord/bin/
 COPY image_optimizer_pretext.txt language_detection_pretext.txt conversation_starter_pretext.txt conversation_starter_pretext_minimal.txt /opt/gpt3discord/share/
