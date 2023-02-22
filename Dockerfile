@@ -56,8 +56,12 @@ FROM python:${PY_VERSION}-slim
 ARG PY_VERSION
 COPY . .
 COPY --from=builder /install /usr/local/lib/python${PY_VERSION}/site-packages
-RUN apt-get update -y
-RUN apt-get install -y ffmpeg
+#Install ffmpeg and clean
+RUN apt-get -y update
+RUN apt-get -y install --no-install-recommends ffmpeg
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /opt/gpt3discord/etc
 COPY gpt3discord.py /opt/gpt3discord/bin/
 COPY image_optimizer_pretext.txt language_detection_pretext.txt conversation_starter_pretext.txt conversation_starter_pretext_minimal.txt /opt/gpt3discord/share/
