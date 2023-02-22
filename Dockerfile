@@ -24,12 +24,10 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN mkdir /install /src
 WORKDIR /install
 
-RUN pip install --target="/install" --upgrade pip setuptools wheel
-RUN pip install --target="/install" --upgrade setuptools_rust
+RUN pip install --target="/install" --upgrade pip setuptools wheel setuptools_rust
 
 COPY requirements_base.txt /install
 COPY requirements_full.txt /install
-COPY requirements_no_deps.txt /install
 RUN pip install --target="install" -r requirements_base.txt
 RUN if [ "${FULL}" = "true" ]; then \
     if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
@@ -38,7 +36,7 @@ RUN if [ "${FULL}" = "true" ]; then \
     ; pip install --target="/install" --upgrade \
        -r requirements_full.txt \
     ; pip install --target="install" --upgrade \
-       --no-deps --no-build-isolation -r requirements_no_deps.txt \
+       --no-deps --no-build-isolation git+https://github.com/openai/whisper.git sentence-transformers==2.2.2 \
     ; fi
 
 COPY README.md /src
