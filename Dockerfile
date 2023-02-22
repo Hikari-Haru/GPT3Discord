@@ -35,9 +35,9 @@ RUN if [ "${FULL}" = "true" ]; then \
     ; if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
     ; if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then pip install --target="/install" --upgrade torch==1.9.0 torchvision==0.10.0 -f https://torch.kmtea.eu/whl/stable.html -f https://ext.kmtea.eu/whl/stable.html ; fi \  
     ; pip install --target="/install" \
-       -r requirements_whisper.txt \
+       -r requirements_full.txt \
     ; pip install --target="install" \
-       --no-deps --no-build-isolation openai-whisper \
+       --no-deps --no-build-isolation -r requirements_no_deps.txt \
     ; fi
 
 COPY README.md /src
