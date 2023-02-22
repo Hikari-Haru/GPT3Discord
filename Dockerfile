@@ -27,8 +27,9 @@ WORKDIR /install
 RUN pip install --target="/install" --upgrade pip setuptools wheel
 RUN pip install --target="/install" --upgrade setuptools_rust
 
-COPY requirements.txt /install
-COPY requirements_whisper.txt /install
+COPY requirements_base.txt /install
+COPY requirements_full.txt /install
+COPY requirements_no_deps.txt /install
 RUN pip install --target="install" -r requirements.txt
 RUN if [ "${FULL}" = "true" ]; then \
     if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
