@@ -162,8 +162,8 @@ To use Docker Compose, you need to have Docker and Docker Compose installed on y
   
 To start the gpt3discord container with Docker Compose, follow these steps:  
   
-1. Open a terminal or command prompt and navigate to the directory that contains the docker-compose.yml file.  
-2. Open the docker-compose.yml file and replace the environment variable values with your actual tokens and IDs.
+1. Rename the `sample.env` file to `.env` and fill it out
+2. Open a terminal or command prompt and navigate to the directory that contains the docker-compose.yml file.
 3. In the docker-compose.yml replace the volumes with a path on your machine if you don't use the ones listed, the path to replace is the one on the left side of the colon.
 4. Run the following command to start the container in detached mode:  
   

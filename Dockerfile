@@ -1,7 +1,5 @@
 ARG PY_VERSION=3.9
 
-
-
 # Build container
 FROM python:${PY_VERSION} as base
 FROM base as builder
@@ -17,10 +15,8 @@ RUN apt-get install -y \
     build-essential \
     gcc \
     curl
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y && apt-get install --reinstall libc6-dev -y
-
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
-
 
 RUN mkdir /install /src
 WORKDIR /install
@@ -29,7 +25,7 @@ RUN pip install --target="/install" --upgrade pip setuptools wheel setuptools_ru
 
 COPY requirements_base.txt /install
 COPY requirements_full.txt /install
-RUN pip install --target="/install" -r requirements_base.txt
+RUN pip install --target="/install" --upgrade -r requirements_base.txt
 RUN if [ "${FULL}" = "true" ]; then \
     if [ -z "{$TARGETPLATFORM}" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
     ; if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then pip install --target="/install" --upgrade torch==1.9.1+cpu torchvision==0.10.1+cpu -f https://download.pytorch.org/whl/torch_stable.html ; fi \
