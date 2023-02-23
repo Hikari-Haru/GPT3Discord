@@ -26,6 +26,9 @@ RUN python3 --version
 RUN file $(which rustup)
 RUN file $(which cargo)
 RUN file $(which rustc)
+RUN arch
+
+RUN cargo clean
 
 
 RUN mkdir /install /src
