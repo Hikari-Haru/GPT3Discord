@@ -11,17 +11,21 @@ ARG FULL
 
 COPY . .
 
-RUN python3 --version
-
 #Install rust
 RUN apt-get update
 RUN apt-get install -y \
     build-essential \
     gcc \
     curl
-    
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh && apt-get install --reinstall libc6-dev -y
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y && apt-get install --reinstall libc6-dev -y
+
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+
+RUN python3 --version
+RUN file $(which rustup)
+RUN file $(which cargo)
+RUN file $(which rustc)
 
 
 RUN mkdir /install /src
