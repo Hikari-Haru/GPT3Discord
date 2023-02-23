@@ -33,7 +33,7 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
         uses: haya14busa/action-cond@v1
         id: isRelease
         with:
-         cond: ${{ github.event_name = 'release' }}
+          cond: ${{ github.event_name = 'release' }}
           if_true: 'linux/amd64,linux/arm64'
           if_false: 'linux/amd64'
 
