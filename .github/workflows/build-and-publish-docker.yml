@@ -74,7 +74,7 @@ jobs:
         uses: haya14busa/action-cond@v1
         id: isRelease
         with:
-          cond: ${{ github.event_name = 'release' }}
+          cond: ${{ github.event_name == 'release' }}
           if_true: 'linux/amd64,linux/arm64'
           if_false: 'linux/amd64'
 
@@ -135,7 +135,7 @@ jobs:
 
   docker-pr:
     # Only builds amd64 due to arm64 being slow
-    if: ${{ github.event_name = 'pull_request' }} && ${{ github.repository == 'Hikari-Haru/GPT3Discord' }}
+    if: ${{ github.event_name == 'pull_request' }} && ${{ github.repository == 'Hikari-Haru/GPT3Discord' }}
     runs-on: ubuntu-20.04
     permissions:
       contents: read
