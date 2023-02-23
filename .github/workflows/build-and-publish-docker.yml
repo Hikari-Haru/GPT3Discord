@@ -25,7 +25,7 @@ env:
 
 jobs:
   docker-push:
-    if: ${{ github.event_name != 'pull_request' }} && ${{ github.repository == 'Hikari-Haru/GPT3Discord' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'Hikari-Haru/GPT3Discord' }}
     runs-on: ubuntu-20.04
     permissions:
       contents: read
@@ -135,7 +135,7 @@ jobs:
 
   docker-pr:
     # Only builds amd64 due to arm64 being slow
-    if: ${{ github.event_name == 'pull_request' }} && ${{ github.repository == 'Hikari-Haru/GPT3Discord' }}
+    if: ${{ github.event_name == 'pull_request' && github.repository == 'Hikari-Haru/GPT3Discord' }}
     runs-on: ubuntu-20.04
     permissions:
       contents: read
