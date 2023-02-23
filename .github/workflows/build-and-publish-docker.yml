@@ -105,7 +105,7 @@ jobs:
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push-base.outputs.digest }}
    
 
-docker-push-full:
+  docker-push-full:
     if: ${{ github.event_name != 'pull_request' && github.repository == 'Hikari-Haru/GPT3Discord' }}
     runs-on: ubuntu-20.04
     permissions:
