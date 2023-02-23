@@ -22,15 +22,6 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y && apt-get install --reinstal
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 
-RUN python3 --version
-RUN file $(which rustup)
-RUN file $(which cargo)
-RUN file $(which rustc)
-RUN arch
-
-RUN cargo clean
-
-
 RUN mkdir /install /src
 WORKDIR /install
 
